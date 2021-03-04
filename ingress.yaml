@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rpi-jf-ingress
+  namespace: grafana
+spec:
+  tls:
+    - hosts:
+        - "rpi-jf.com.br"
+      secretName: grafana-tls
+  rules:
+    - host: "rpi-jf.com.br"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/grafana"
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000
